@@ -1,0 +1,667 @@
+# Powerlevel10k Classic style for Starship, made with configure.html from p10k-starship.
+# Needs Starship 1.26 or newer and a Nerd Font.
+#
+# Answers:
+#   Prompt Style              Classic
+#   Prompt Color              Light
+#   Show current time?        No
+#   Prompt Separators         Angled
+#   Prompt Heads              Sharp
+#   Prompt Tails              Flat
+#   Prompt Height             Two lines
+#   Prompt Connection         Disconnected
+#   Prompt Frame              Full
+#   Prompt Spacing            Sparse
+#   Icons                     Few icons
+#   Icon Set                  Nerd Font
+#   Icon Padding              None
+#   Prompt Flow               Concise
+#   Enable Transient Prompt?  No
+#
+# To change them, open configure.html, click "Load settings from a file" and pick this
+# file. It reads them from the next line.
+# p10k-starship: style=classic&color=2&time=none&separators=angled&heads=sharp&tails=flat&lines=2&connection=disconnected&frame=full&spacing=sparse&icons=few&symbols=nerd&padding=none&flow=concise&transient=no
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+palette = 'p10k'
+
+# Line 1: left segments, the connection and right segments. Line 2: where you type.
+# $env_var and ${custom} show your own env_var and custom modules; give them a format in
+# the same style.
+format = """
+[╭─](fg:frame)\
+$directory\
+$vcsh\
+$fossil_branch\
+$fossil_metrics\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$hg_state\
+$pijul_channel\
+[](fg:prev_bg)\
+$fill\
+[](fg:bg)\
+$status\
+$cmd_duration\
+$jobs\
+$direnv\
+$docker_context\
+$package\
+$bun\
+$c\
+$cmake\
+$cobol\
+$cpp\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$fortran\
+$gleam\
+$golang\
+$gradle\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$lua\
+$maven\
+$mojo\
+$nim\
+$nodejs\
+$ocaml\
+$odin\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$quarto\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$xmake\
+$zig\
+$buf\
+$guix_shell\
+$nix_shell\
+$conda\
+$pixi\
+$meson\
+$spack\
+$memory_usage\
+$kubernetes\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$nats\
+$mise\
+$crystal\
+$env_var\
+${custom}\
+$container\
+$singularity\
+$netns\
+$localip\
+$shlvl\
+$shell\
+$sudo\
+$battery\
+($username$hostname[ ](bg:prev_bg))\
+$time\
+[─╮](fg:frame)\
+$line_break\
+[╰─ ](fg:frame)"""
+
+# Next to the line you type on. PowerShell needs p10k-starship.ps1 for this.
+right_format = '[─╯](fg:frame)'
+
+# Colors used below. Change one here to change it everywhere.
+[palettes.p10k]
+bg = '238'
+sep = '246'
+prefix = '248'
+frame = '242'
+
+[fill]
+symbol = ' '
+style = 'fg:frame'
+
+# Current directory. The repository root is shown in bold, like p10k's anchors.
+[directory]
+format = '[ $read_only]($read_only_style)[$path]($style)[ ](bg:bg)'
+repo_root_format = '[ $read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:bg)'
+style = 'bold fg:39 bg:bg'
+before_repo_root_style = 'fg:31 bg:bg'
+repo_root_style = 'bold fg:39 bg:bg'
+read_only = '󰌾 '
+read_only_style = 'fg:31 bg:bg'
+truncation_length = 7
+truncation_symbol = '…/'
+truncate_to_repo = false
+
+# Git branch, then the commit when HEAD is detached, an operation in progress and the
+# status counters.
+[git_branch]
+format = '[](fg:sep bg:bg)[ $symbol$branch](fg:76 bg:bg)([:](fg:prefix bg:bg)[$remote_branch](fg:76 bg:bg))[ ](bg:bg)'
+symbol = ''
+only_attached = true
+truncation_length = 32
+truncation_symbol = '…'
+
+[git_commit]
+format = '[](fg:sep bg:bg)[ @](fg:prefix bg:bg)[$hash](fg:76 bg:bg)([ #](fg:prefix bg:bg)[$tag](fg:76 bg:bg))[ ](bg:bg)'
+commit_hash_length = 8
+tag_disabled = false
+tag_symbol = ''
+
+[git_state]
+format = '[$state( $progress_current/$progress_total) ](fg:196 bg:bg)'
+rebase = 'rebase'
+merge = 'merge'
+revert = 'revert'
+cherry_pick = 'cherry-pick'
+bisect = 'bisect'
+am = 'am'
+am_or_rebase = 'am/rebase'
+
+[git_status]
+format = '$ahead_behind$stashed$conflicted$staged$modified$renamed$deleted$untracked'
+ahead = '[↑${count} ](fg:76 bg:bg)'
+behind = '[↓${count} ](fg:76 bg:bg)'
+diverged = '[↓${behind_count}↑${ahead_count} ](fg:76 bg:bg)'
+up_to_date = ''
+stashed = '[*${count} ](fg:76 bg:bg)'
+conflicted = '[~${count} ](fg:196 bg:bg)'
+staged = '[+${count} ](fg:178 bg:bg)'
+modified = '[!${count} ](fg:178 bg:bg)'
+renamed = '[»${count} ](fg:178 bg:bg)'
+deleted = '[${count} ](fg:178 bg:bg)'
+untracked = '[?${count} ](fg:39 bg:bg)'
+
+# Lines added and deleted. Off, as in Starship's defaults.
+[git_metrics]
+disabled = true
+format = '([+$added ](fg:76 bg:bg))([-$deleted ](fg:196 bg:bg))'
+
+[vcsh]
+format = '[](fg:sep bg:bg)[ vcsh $repo ](fg:178 bg:bg)'
+
+# Fossil, Mercurial and Pijul. Off, as in Starship's defaults.
+[fossil_branch]
+disabled = true
+format = '[](fg:sep bg:bg)[ $symbol$branch](fg:76 bg:bg)[ ](bg:bg)'
+symbol = ''
+
+[fossil_metrics]
+disabled = true
+format = '([+$added ](fg:76 bg:bg))([-$deleted ](fg:196 bg:bg))'
+
+[hg_branch]
+disabled = true
+format = '[](fg:sep bg:bg)[ $symbol$branch(:$topic)](fg:76 bg:bg)[ ](bg:bg)'
+symbol = ''
+
+[hg_state]
+disabled = true
+format = '[$state ](fg:196 bg:bg)'
+
+[pijul_channel]
+disabled = true
+format = '[](fg:sep bg:bg)[ $symbol$channel](fg:76 bg:bg)[ ](bg:bg)'
+symbol = ''
+
+# Exit status: a check mark after success, the exit code and a cross after an error. It
+# always comes first on the right.
+[status]
+disabled = false
+format = '$symbol'
+success_symbol = '[  ](fg:70 bg:bg)'
+symbol = '[ $status  ](fg:160 bg:bg)'
+
+# How long the last command took, from 3 seconds on.
+[cmd_duration]
+min_time = 3000
+format = '[](fg:sep bg:bg)[ $duration ](fg:248 bg:bg)'
+
+[jobs]
+format = '[](fg:sep bg:bg)[ $symbol ](fg:37 bg:bg)'
+symbol = ''
+
+# Disabled because it runs direnv before every prompt. Set disabled = false if you use
+# direnv.
+[direnv]
+disabled = true
+format = '[](fg:sep bg:bg)[ $symbol ](fg:178 bg:bg)'
+symbol = ''
+
+# Tools and toolchains, shown inside projects that use them. The list, its order and
+# which ones are on follow Starship's defaults.
+[docker_context]
+format = '[](fg:sep bg:bg)[ ($context )$symbol](fg:32 bg:bg)'
+symbol = ' '
+
+[package]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:208 bg:bg)'
+symbol = '󰏗 '
+version_format = '${raw}'
+
+[bun]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:160 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[c]
+format = '[](fg:sep bg:bg)[ ($version(-$name) )$symbol](fg:149 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[cmake]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[cobol]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[cpp]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($version(-$name) )$symbol](fg:149 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[daml]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:37 bg:bg)'
+symbol = 'Λ '
+version_format = '${raw}'
+
+[dart]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:38 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[deno]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:70 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[dotnet]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:134 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[elixir]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:129 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[elm]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:37 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[erlang]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:125 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[fennel]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:70 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[fortran]
+format = '[](fg:sep bg:bg)[ ($version(-$name) )$symbol](fg:134 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[gleam]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:219 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[golang]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:37 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[gradle]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:44 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[haskell]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:172 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[haxe]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:202 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[helm]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:252 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[java]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[julia]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:70 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[kotlin]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[lua]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[maven]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:44 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[mojo]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:208 bg:bg)'
+symbol = '󰈸 '
+
+[nim]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:178 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[nodejs]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:70 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[ocaml]
+format = '[](fg:sep bg:bg)[ ($version( \($switch_indicator$switch_name\)) )$symbol](fg:178 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[odin]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:39 bg:bg)'
+symbol = '󰟢 '
+
+[opa]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[perl]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:67 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[php]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:99 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[pulumi]
+format = '[](fg:sep bg:bg)[ (($username@)$stack )$symbol](fg:134 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[purescript]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:252 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[python]
+format = '[](fg:sep bg:bg)[ ($version( $virtualenv) )$symbol](fg:37 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[quarto]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:74 bg:bg)'
+symbol = '󰐙 '
+version_format = '${raw}'
+
+[raku]
+format = '[](fg:sep bg:bg)[ ($version-$vm_version )$symbol](fg:149 bg:bg)'
+symbol = '󱖊 '
+version_format = '${raw}'
+
+[rlang]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = '󰟔 '
+version_format = '${raw}'
+
+[red]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:160 bg:bg)'
+symbol = '󱍼 '
+version_format = '${raw}'
+
+[ruby]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:168 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[rust]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:37 bg:bg)'
+symbol = '󱘗 '
+version_format = '${raw}'
+
+[scala]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:160 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[solidity]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[swift]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:202 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[terraform]
+format = '[](fg:sep bg:bg)[ ($workspace )$symbol](fg:38 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[typst]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:31 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[vlang]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[vagrant]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:37 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[xmake]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:70 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[zig]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:178 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[buf]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:32 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[guix_shell]
+format = '[](fg:sep bg:bg)[ $symbol](fg:178 bg:bg)'
+symbol = ' '
+
+[nix_shell]
+format = '[](fg:sep bg:bg)[ ($state( $name) )$symbol](fg:74 bg:bg)'
+symbol = ' '
+
+[conda]
+format = '[](fg:sep bg:bg)[ ($environment )$symbol](fg:37 bg:bg)'
+symbol = ' '
+ignore_base = true
+
+[pixi]
+format = '[](fg:sep bg:bg)[ ($version( \($environment\)) )$symbol](fg:178 bg:bg)'
+symbol = '󰏗 '
+version_format = '${raw}'
+
+[meson]
+format = '[](fg:sep bg:bg)[ ($project )$symbol](fg:32 bg:bg)'
+symbol = '󰔷 '
+
+[spack]
+format = '[](fg:sep bg:bg)[ ($environment )$symbol](fg:32 bg:bg)'
+symbol = ' '
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[memory_usage]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($ram( | $swap) )$symbol](fg:252 bg:bg)'
+symbol = '󰍛 '
+
+# Off: p10k shows this only while you type a matching command (kubectl, az, gcloud),
+# Starship would show it all the time. The same goes for azure and gcloud below.
+[kubernetes]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($context( /$namespace) )$symbol](fg:134 bg:bg)'
+symbol = '󱃾 '
+
+[aws]
+format = '[](fg:sep bg:bg)[ ($profile( $region) )$symbol](fg:208 bg:bg)'
+symbol = ' '
+
+[gcloud]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($project )$symbol](fg:32 bg:bg)'
+symbol = '󱇶 '
+
+[openstack]
+format = '[](fg:sep bg:bg)[ ($cloud( \($project\)) )$symbol](fg:178 bg:bg)'
+symbol = ' '
+
+[azure]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($subscription )$symbol](fg:32 bg:bg)'
+symbol = ' '
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[nats]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($name )$symbol](fg:134 bg:bg)'
+symbol = ' '
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[mise]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($health )$symbol](fg:134 bg:bg)'
+symbol = 'mise '
+
+[crystal]
+format = '[](fg:sep bg:bg)[ ($version )$symbol](fg:160 bg:bg)'
+symbol = ' '
+version_format = '${raw}'
+
+[container]
+format = '[](fg:sep bg:bg)[ ($name )$symbol](fg:178 bg:bg)'
+symbol = ' '
+
+[singularity]
+format = '[](fg:sep bg:bg)[ ($env )$symbol](fg:32 bg:bg)'
+symbol = ' '
+
+[netns]
+format = '[](fg:sep bg:bg)[ ($name )$symbol](fg:32 bg:bg)'
+symbol = '󰛳 '
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[localip]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($localipv4 )](fg:178 bg:bg)'
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[shlvl]
+disabled = true
+format = '[](fg:sep bg:bg)[ ($shlvl )$symbol](fg:178 bg:bg)'
+symbol = '󰹍 '
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[shell]
+disabled = true
+format = '[](fg:sep bg:bg)[ $indicator ](fg:252 bg:bg)'
+
+# Off, as in Starship's defaults. Set disabled = false to show it.
+[sudo]
+disabled = true
+format = '[](fg:sep bg:bg)[ $symbol](fg:32 bg:bg)'
+symbol = ' '
+
+# Battery, shown below 10%, as in Starship's defaults.
+[battery]
+format = '[](fg:sep bg:bg)[ $percentage $symbol]($style)'
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂃 '
+unknown_symbol = '󰂑 '
+empty_symbol = '󰂎 '
+display = [{ threshold = 10, style = 'bold fg:160 bg:bg' }]
+
+# user@host, shown for root and over SSH.
+[username]
+format = '[](fg:sep bg:bg)[ $user]($style)'
+style_user = 'fg:180 bg:bg'
+style_root = 'bold fg:178 bg:bg'
+
+[hostname]
+format = '[@$hostname]($style)'
+style = 'fg:180 bg:bg'
+ssh_only = true
+ssh_symbol = ''
+
+[time]
+disabled = true
+time_format = '%H:%M:%S'
+format = '[](fg:sep bg:bg)[ $time ](fg:66 bg:bg)'
